@@ -1,17 +1,12 @@
-
 def printBoard(myList: list):
     alphabetString = "ABCDEFGH"
 
     print("  1 2 3 4 5 6 7 8")
-
-    for i in range(len(myList)):
-        if i % 8 == 0:
-            print(alphabetString[i // 8], end=" ")
-
-        print(myList[i], end=" ")
-
-        if (i + 1) % 8 == 0:
-            print()
+    for row in range(len(myList)):
+        print(alphabetString[row], end=" ")
+        for column in range(len(myList[row])):
+            print(myList[row][column], end=" ")
+        print()
 
 def inputBoardValidation(value : str):
     if len(str) > 2:
@@ -42,6 +37,9 @@ def inputBoardValidation(value : str):
     
 
 def main():
-    myList = ['$'] * 64
-    printBoard(myList)
+    rows = 8
+    columns = 8
+    list2d = [['$']*columns]*rows
+    printBoard(list2d)
+
 main()
