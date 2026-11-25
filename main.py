@@ -12,7 +12,7 @@ def printBoard(myList: list):
             print(myList[row][column], end=" ")
         print()
 
-def inputBoardValidation(move : str, list2d : list):
+def inputBoardValidation(move : str, marker : str, list2d : list):
     if len(move) > 2:
         print("Invalid")
     row = move[0].upper()
@@ -38,10 +38,10 @@ def inputBoardValidation(move : str, list2d : list):
             return "Not Found"
         case _:
             return "Unknown Status"
-    list2d[row][column] = "X"
+    list2d[row][column] = marker
     return (row,column)
     
-def checkForWinner(move, row, column, list2d) -> int:
+def checkForWinner(move, row , column, list2d) -> int:
     left, right = column - 1, column + 1
     up, down = row - 1, row + 1
     totalLeftRight = 0
@@ -49,28 +49,28 @@ def checkForWinner(move, row, column, list2d) -> int:
 
     if move == "X":
         while left >= 0:
-            if list2d[row][left] == "X":
+            if list2d[row][left] == move:
                 totalLeftRight += 1
                 left -= 1
             else:
                 break
 
         while right < len(list2d[row]):
-            if list2d[row][right] == "X":
+            if list2d[row][right] == move:
                 totalLeftRight += 1
                 right += 1
             else:
                 break
 
         while up >= 0:
-            if list2d[up][column] == "X":
+            if list2d[up][column] == move:
                 totalUpDown += 1
                 up -= 1
             else:
                 break
 
         while down < len(list2d):
-            if list2d[down][column] == "X":
+            if list2d[down][column] == move:
                 totalUpDown += 1
                 down += 1
             else:
@@ -78,19 +78,39 @@ def checkForWinner(move, row, column, list2d) -> int:
 
         if totalLeftRight + 1 >= 4 or totalUpDown + 1 >= 4:
             print(5000)
-            return 5000  # User has won
+            return 5000  # winner has been found
 
     print(0)
     return 0  # No winner found by this check
-    
+
+def evaluationFunction():
+    ...
+
+def bestMove(board, alpha : float, beta : float) -> float:
+    if checkForWinner("O", 0, 0, board) == "5000": # assigned default values 
+        return 5000
+    else:
+
+
+def alphaBetaSearch(board):
+    # returns an action like c2 
+    positiveInfinity = float('inf')
+    negativeInfinity = float('-inf')   
+    value, bestMove = maxValue(board, negativeInfinity, positiveInfinity)
+    return bestMove
+
+def computerMove():
+    ...
+
 def getaMove(list2d):
     gameCheckerFlag = True
     while gameCheckerFlag:
         move = input("Enter your move: ")
-        row, column = inputBoardValidation(move, list2d)
+        row, column = inputBoardValidation(move, "X", list2d)
         outcome = checkForWinner("X", row, column, list2d)
         print(outcome)
         printBoard(list2d)
+        computerMove()
 
 def playGame():
     rows, columns = 8 , 8
